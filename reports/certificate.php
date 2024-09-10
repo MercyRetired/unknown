@@ -1,28 +1,26 @@
 <?php
 // Obtener el identificador desde la URL
-$id = $_GET['id'] ?? null;
+$c = $_GET['c'] ?? null;
 
 // Validar que el identificador no esté vacío
-if ($id === null) {
+if ($c === null) {
     header('Location: https://www.iteptest.com/reports/certificate.php');
     exit;
-    
 }
 
 // Definir la ruta del archivo PDF
-$file_path = __DIR__ . "/pdfs/$id.pdf";
+$file_path = __DIR__ . "/pdfs/$c.pdf";
 
 // Verificar si el archivo PDF existe
 if (file_exists($file_path)) {
     // Verificar si se está accediendo directamente para cargar el PDF con un nombre personalizado
     if (isset($_GET['view'])) {
         header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="certificate.php"');
+        header('Content-Disposition: inline; filename="certificate.pdf"');
         header('Content-Length: ' . filesize($file_path));
         readfile($file_path);
         exit;
     }
-
 
     echo "
     <!DOCTYPE html>
@@ -34,8 +32,11 @@ if (file_exists($file_path)) {
         <link rel='icon' href='favicon.ico' type='image/x-icon'>
     </head>
     <body style='height: 100%; width: 100%; overflow: hidden; margin:0px; background-color: rgb(82, 86, 89);'>
-        <embed name='621Z3PC0YWUOOY9RF7V0T0LUS6RP49WH' style='position:absolute; left: 0; top: 0; width: 100vw;
-height: 100vh;display: block;border:none;'src='certificate.php?id=$id&view=true'type='application/pdf'internalid='621Z3PC0YWUOOY9RF7V0T0LUS6RP49WH'>
+        <embed name='621Z3PC0YWUOOY9RF7V0T0LUS6RP49WH' 
+        style='position:absolute; left: 0; top: 0; width: 100vw; height: 100vh; display: block; border:none;' 
+        src='certificate.php?c=$c&view=true' 
+        type='application/pdf' 
+        internalid='621Z3PC0YWUOOY9RF7V0T0LUS6RP49WH'>
     </body>
     </html>";
 
